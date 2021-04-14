@@ -11,6 +11,7 @@ import com.example.agenda.model.Aluno
 
 class FormularioAlunoActivity : AppCompatActivity() {
     private val TITULO_APPBAR = "Cadastro Aluno(a)"
+    //TODO trocar de by lazy para lateinit var
     private val nomeEditText by lazy { findViewById<EditText>(R.id.activity_formulario_aluno_nome) }
     private val telefoneEditText  by lazy { findViewById<EditText>(R.id.activity_formulario_aluno_telefone) }
     private val emailEditText by lazy { findViewById<EditText>(R.id.activity_formulario_aluno_e_mail) }

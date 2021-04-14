@@ -10,13 +10,15 @@ import com.example.agenda.dao.AlunoDAO
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListaAlunosActivity : AppCompatActivity() {
+    private val TITLE_APPBAR = "Agenda de Alunos"
+    //TODO trocar de lazy para lateinit var
     private val fab by lazy { findViewById<FloatingActionButton>(R.id.activity_main_fab_add) }
     private val alunosListView by lazy { findViewById<ListView>(R.id.activity_lista_alunos_listview) }
     private val dao = AlunoDAO()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = "Agenda de Alunos"
+        title = TITLE_APPBAR
         setContentView(R.layout.activity_lista_alunos)
         setFabListener()
     }
