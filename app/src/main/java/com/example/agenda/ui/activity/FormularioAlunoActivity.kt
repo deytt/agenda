@@ -10,22 +10,25 @@ import com.example.agenda.dao.AlunoDAO
 import com.example.agenda.model.Aluno
 
 class FormularioAlunoActivity : AppCompatActivity() {
-    private val TITULO_APPBAR = "Cadastro Aluno(a)"
     //TODO trocar de by lazy para lateinit var
-    private val nomeEditText by lazy { findViewById<EditText>(R.id.activity_formulario_aluno_nome) }
-    private val telefoneEditText  by lazy { findViewById<EditText>(R.id.activity_formulario_aluno_telefone) }
-    private val emailEditText by lazy { findViewById<EditText>(R.id.activity_formulario_aluno_e_mail) }
-    private val botaoSalvar by lazy { findViewById<Button>(R.id.activity_formulario_aluno_botao_salvar) }
+    lateinit var nomeEditText: EditText
+    lateinit var telefoneEditText: EditText
+    lateinit var emailEditText: EditText
+    lateinit var botaoSalvar: Button
     private val dao = AlunoDAO()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_formulario_aluno)
-        title = TITULO_APPBAR
+        title = resources.getString(R.string.TITULO_APPBAR)
+        initializeComponents()
         setBotaoSalvarListener()
-    }
 
-    private fun salvarAluno(alunoCriado: Aluno) = dao.salvar(alunoCriado)
+        val aluno = intent.getSerializableExtra("AlunoSelecionado") as Aluno
+        nomeEditText.setText(aluno.nome)
+        telefoneEditText.setText(aluno.telefone)
+        emailEditText.setText(aluno.email)
+    }
 
     private fun createAluno(): Aluno {
         val nome = nomeEditText.text.toString()
@@ -44,8 +47,17 @@ class FormularioAlunoActivity : AppCompatActivity() {
         }
     }
 
+    private fun initializeComponents() {
+        nomeEditText = findViewById(R.id.activity_formulario_aluno_nome)
+        telefoneEditText = findViewById(R.id.activity_formulario_aluno_telefone)
+        emailEditText = findViewById(R.id.activity_formulario_aluno_e_mail)
+        botaoSalvar = findViewById(R.id.activity_formulario_aluno_botao_salvar)
+    }
+
     private val notifyAlunoCriadoFunc: (alunoCriado: Aluno) -> Unit = {
         val msg = "Aluno(a) ${it.nome} criado."
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
+
+    private fun salvarAluno(alunoCriado: Aluno) = dao.salvar(alunoCriado)
 }
